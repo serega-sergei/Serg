@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:phaseListener type="org.icefaces.training.applicant.view.lifecycle.PagePhaseListener"/>
+<h:head></h:head>
+<h:body>
+    <h:form>
+    <h:messages globalOnly="true" />
+        <h:panelGrid columns="3">
+            <h:outputLabel for="title" value="#{msgs.title}" />
+            <h:selectOneRadio id="title" 
+                              required="true"
+                              value="#{jobApplicant.title}">
+                <f:selectItem itemLabel="Dr." itemValue="1" />
+                <f:selectItem itemLabel="Ms." itemValue="2" />
+                <f:selectItem itemLabel="Mrs." itemValue="3" />
+                <f:selectItem itemLabel="Miss" itemValue="4" />
+                <f:selectItem itemLabel="Mr." itemValue="5" />
+            </h:selectOneRadio>
+            <h:message for="title" />
+            <h:outputLabel for="firstName" value="#{msgs.firstName}" />
+            <h:inputText id="firstName" 
+                         value="#{jobApplicant.firstName}"
+                         converter="wordCapitalization"
+                         required="true" />
+            <h:message for="firstName" />
+            <h:outputLabel for="lastName" value="#{msgs.lastName}" />
+            <h:inputText id="lastName" 
+                         value="#{jobApplicant.lastName}"
+                         converter="wordCapitalization"
+                         required="true" />
+            <h:message for="lastName" />
+            <h:outputLabel for="email" value="#{msgs.email}" />
+            <h:inputText id="email" 
+                         value="#{jobApplicant.email}"
+                         validator="emailValidator"
+                         required="true" />
+            <h:message for="email" />
+            <h:outputLabel for="country" value="#{msgs.country}" />
+            <h:selectOneMenu id="country" 
+                             value="#{jobApplicant.country}"
+                             required="true">
+                <f:selectItem itemLabel="-Select-" noSelectionOption="true" />
+                <f:selectItems value="#{countryList.countries}" />
+            </h:selectOneMenu>
+            <h:message for="country" />
+            <h:outputLabel for="salary" value="#{msgs.salary}" />
+            <h:inputText id="salary" 
+                         value="#{jobApplicant.salary}"
+                         required="true">
+                <f:convertNumber type="currency" integerOnly="true" />
+                <f:validateLongRange minimum="1" maximum="1000000" />
+            </h:inputText>
+            <h:message for="salary" />
+            <h:commandButton actionListener="#{jobApplicant.submit}" 
+                             value="#{msgs.submitApplicant}" />
+        </h:panelGrid>
+    </h:form>
+    <br />
+    - Server -<br />
+    Title: <h:outputText value="#{jobApplicant.title}" /><br />
+    First Name: <h:outputText value="#{jobApplicant.firstName}" /><br />
+    Last Name: <h:outputText value="#{jobApplicant.lastName}" /><br />
+    Country: <h:outputText value="#{jobApplicant.country}" /><br />
+    Salary: <h:outputText value="#{jobApplicant.salary}" /><br />
+</h:body>
+</html>
